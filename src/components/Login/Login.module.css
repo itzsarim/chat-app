@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30%;
+    height: 30vh;
+}
+.username {
+    width: 100%;
+    outline: 0px;
+    appearance: none;
+    transition: all 0.2s ease 0s;
+    font-size: 1rem;
+    padding: 1em;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: inherit;
+    background: inherit;
+}
+.button {
+    color: white;
+    background-color: red;
+    width: 100%;
+    padding: 10px;
+}
