@@ -7,16 +7,17 @@ import './App.css';
 
 function App() {
   const [userName, setUsername] = useState('');
+  const name = useSelector(selectName);
+  
   useEffect(() => {
-
-  })
+    setUsername(name)
+  }, [name])
   
 
   return (
     <div className="App">
       <main className="App-main">
-        {/* { name ? <MainView /> : <Login /> } */}
-        {<MainView />}
+        { userName ? <MainView /> : <Login /> }
       </main>
     </div>
   );
