@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setRooms, selectRooms, setSelectedRoomId  } from './sidebarSlice';
 import { selectName, selectTimestamp } from '../login/loginSlice';
+import { getRooms } from '../../api/chat-api';
 import styles from './Sidebar.module.css';
 
 export function Sidebar() {
@@ -12,16 +13,17 @@ export function Sidebar() {
     const [duration, setDuration] = useState(0);
     
     useEffect(() => {
-        getRooms();
+        getRoomsInfo();
         setInterval(() => {
             getTimeSinceLogin();
         }, 60000);
     },[])
 
-    async function getRooms() {
+    
+
+    async function getRoomsInfo() {
         try {
-            const response = await fetch('http://localhost:8080/api/rooms');
-            const rooms = await response.json();
+            const rooms = await getRooms();
             dispatch(setRooms(rooms))
         } catch(e) {
             console.log('Cannot fetch rooms with error', e);
