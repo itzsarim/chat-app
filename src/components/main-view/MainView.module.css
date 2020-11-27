@@ -1,0 +1,12 @@
+.wrapper{
+    display: flex;
+}
+
+.sidebar {
+    width: 400px;
+
+}
+
+.chat-view {
+
+}

@@ -19,24 +19,26 @@ export function Login({t}) {
 
   return (
     <>
-      <form className={styles.container} onSubmit={handleSubmit}>
-          <input
-              className={styles.username}
-              aria-label="enter your username"
-              value={userName}
-              placeholder={"Type your username"}
-              pattern="^[a-zA-Z0-9_-]{3,16}$"
-              title="Alphanumeric string that may include _ and – having a length of 3 to 16 characters."
-              onChange={e => setUsername(e.target.value)}
-            />
-            <button
-              type="submit"
-              className={styles.button}
-              aria-label="submit username"
-            >
-              <span>Join the DoorDash Chat!</span>
-            </button>
-      </form>
+      <div className={styles.wrapper}>
+        <form className={styles.container} onSubmit={handleSubmit}>
+            <input
+                className={styles.username}
+                aria-label="enter your username"
+                value={userName}
+                placeholder={"Type your username"}
+                pattern="^[a-zA-Z0-9_-]{3,16}$"
+                title="Alphanumeric string that may include _ and – having a length of 3 to 16 characters."
+                onChange={e => setUsername(e.target.value)}
+              />
+              <button
+                type="submit"
+                className={styles.button}
+                aria-label="submit username"
+              >
+                <span>Join the DoorDash Chat!</span>
+              </button>
+        </form>
+      </div>
     </>
   );
 }
