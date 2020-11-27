@@ -12,6 +12,7 @@ export function Login({t}) {
   const [userName, setUsername] = useState('');
 
   function handleSubmit(e) {
+    // Typically the server should also have validation on username as it should be unique in the system
     dispatch(setUsersName(userName));
     dispatch(setLoginTimestamp(Date.now()));
     e.preventDefault();
