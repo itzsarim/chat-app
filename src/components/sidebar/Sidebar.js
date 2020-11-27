@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setRooms, selectRooms  } from './sidebarSlice';
+import { setRooms, selectRooms, setSelectedRoomId  } from './sidebarSlice';
 import { selectName, selectTimestamp } from '../login/loginSlice';
 import styles from './Sidebar.module.css';
 
@@ -42,7 +42,7 @@ export function Sidebar() {
             </div>
             <ul>
                {rooms.map((room) => {
-                   return <li key={room.id}>{room.name}</li>
+                   return <li key={room.id} onClick={() => dispatch(setSelectedRoomId(room.id))}>{room.name}</li>
                })      
                }         
             </ul>

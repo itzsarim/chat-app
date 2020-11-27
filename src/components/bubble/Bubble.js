@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 import { selectName } from '../login/loginSlice';
 import styles from './Bubble.module.css';
 
-export function Bubble() {
+export function Bubble(prop) {
     return (
         <>
         <div className={styles.container}>
-            <div className={styles.message}>This is a message</div>
-            <div className={styles.name}>Sarim Zaidi</div>
+            <div className={styles.message}>{prop.message}</div>
+            <div className={styles.name}>{prop.name}</div>
         </div>
         </>
     );
