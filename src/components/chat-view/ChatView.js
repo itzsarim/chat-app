@@ -23,7 +23,7 @@ export function ChatView() {
         }
         setTimerId(setInterval(() => {
             getMessages();
-        }, 5000));
+        }, 500));
     }
 
     function handleSend(e) {
@@ -56,19 +56,30 @@ export function ChatView() {
         <>
         <div className={styles.header}> 
             <div className={styles.roomName}>{roomDetail && roomDetail[0] && roomDetail[0].name}</div>
-            <div className={styles.participants}>{
-                roomDetail && roomDetail[0] && roomDetail[0].users && roomDetail[0].users.map((user) => {
-                    return <span>{`${user},`}</span>
-                })
-            }</div>
+            <div className={styles.participants}>
+                {roomDetail && roomDetail[0] && roomDetail[0].users && roomDetail[0].users.includes(selfName) ? <span className={styles.selfName}>{selfName}</span> : null}
+                {
+                    roomDetail && roomDetail[0] && roomDetail[0].users && roomDetail[0].users.map((user, i, arr) => {
+                        if(arr.includes(selfName)) {
+                            if(user === selfName) return;
+                            return <span className={styles.userName}>{`, ${user}`}</span>
+                        }
+
+                        if(i === arr.length-1) {
+                            return <span className={styles.userName}>{`${user}`}</span>
+                        }
+                        return <span className={styles.userName}>{`${user} ,`}</span>
+                    })
+                }
+            </div>
         </div>
         <div className={styles.main}>
             {messages && messages.map((message) => {
-                return <Bubble name={message.name} message={message.message} id={message.id}/>
+                return <Bubble name={message.name} message={message.message} self={selfName} id={message.id}/>
             })}
         </div>
         <div className={styles.footer}>
-            <form className={styles.container} onSubmit={handleSend}>
+            <form className={styles.formContainer} onSubmit={handleSend}>
                 <input
                     type='text'
                     className={styles.enterMessage}

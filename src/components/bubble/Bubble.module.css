@@ -1,0 +1,33 @@
+.containerMe {
+    color: white;
+    align-self: flex-end;
+    margin-right: 15px;
+    margin-bottom: 10px; 
+}
+
+.containerThem {
+    color: black;
+    align-self: flex-start;
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.messageMe {
+    background-color: #FF1940;
+    border-radius: 35px;
+    display:inline-block;
+    padding: 15px;
+}
+
+.messageThem {
+    background-color: white;
+    border-radius: 35px;
+    display:inline-block;
+    padding: 15px;
+}
+
+.name {
+    color: gray;
+    font-size: 0.80em;
+    text-align: left;
+}

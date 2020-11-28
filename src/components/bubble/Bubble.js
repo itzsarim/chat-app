@@ -6,10 +6,10 @@ import styles from './Bubble.module.css';
 export function Bubble(prop) {
     return (
         <>
-        <div className={styles.container}>
-            <div className={styles.message}>{prop.message}</div>
-            <div className={styles.name}>{prop.name}</div>
-        </div>
+            <div className={prop.self === prop.name ? styles.containerMe : styles.containerThem}>
+                <p className={prop.self === prop.name ? styles.messageMe : styles.messageThem}>{prop.message}</p>
+                {prop.self !== prop.name ? <p className={styles.name}>{prop.name}</p> : null}
+            </div>
         </>
     );
 }
