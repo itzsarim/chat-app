@@ -97,21 +97,21 @@ export function ChatView() {
                 {
                     roomDetail && roomDetail[0] && roomDetail[0].users && roomDetail[0].users.map((user, i, arr) => {
                         if(arr.includes(selfName)) {
-                            if(user === selfName) return;
-                            return <span className={styles.userName}>{`, ${user}`}</span>
+                            if(user === selfName) return '';
+                            return <span className={styles.userName} key={user}>{`, ${user}`}</span>
                         }
 
                         if(i === arr.length-1) {
-                            return <span className={styles.userName}>{`${user}`}</span>
+                            return <span className={styles.userName} key={user}>{`${user}`}</span>
                         }
-                        return <span className={styles.userName}>{`${user}, `}</span>
+                        return <span className={styles.userName} key={user}>{`${user}, `}</span>
                     })
                 }
             </div>
         </div>
         <div className={styles.main} ref={scrollRef}>
             {messages && messages.map((message) => {
-                return <Bubble name={message.name} message={message.message} self={selfName} id={message.id}/>
+                return <Bubble name={message.name} message={message.message} self={selfName} id={message.id} key={message.id}/>
             })}
         </div>
         <div className={styles.footer} >

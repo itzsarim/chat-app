@@ -16,7 +16,8 @@
 }
 
 .para {
-    line-height: 10vh
+    line-height: 10vh;
+    cursor: pointer;
 }
 
 .online {
