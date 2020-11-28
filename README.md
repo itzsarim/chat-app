@@ -1,23 +1,40 @@
 # Documentation of the project
 
 ## Notes on starting the app
-This app is built using create react app(CRA) asthe starting point. To run this app, please downaload and install yarn on your machine(https://classic.yarnpkg.com/en/docs/install), then use command `yarn start` to run the app. You will also need to run the server using `yarn api-server`
+This app is built using create react app(CRA) as the starting point. To run this app, please downaload and install yarn on your machine(https://classic.yarnpkg.com/en/docs/install), then use command `yarn add` followed by `yarn start` to run the app. You will also need to run the server using `yarn api-server`
 
 ## Notes on what was built 
 
 This app covers all the specifications given in the `detailed-design-specs` file.
-* Its been taken care that the app is accessible(scores 97% on lighthouse audit). Try using keyboard to navigate throught the app.
+* Its been taken care that the app is accessible(scores 97% on lighthouse audit). Try using keyboard to navigate through the app.
 * There is a `Login` page which takes in a username that should be between 3 and 16 characters and can contain nothing but alphanumeric characters, - and _.
 * Once you login by entering a valid username, you are taken to the `MainView`, which has a `Sidebar` with name of the person who logged in and how long it has been since they logged in. There is a list of all rooms available based on the server response(Note: you cannot add a new room, as the server does not support it). 
 * When you click on a list item(room) the `ChatView` gets populated with room details and messages in that room. 
 * You can add new messages in the room , these messages get added to the bottom of the chat and is also scrolled to the bottom.
 * The app is responsive on desktop.
+* CSS follows a scalable and modular approach, and nowhere will you find any nested css or css tightly coupled with the HTML
+* BONUS - users on 2 different windows can chat with each other \m/
+
+## Things that could have been added/done better
+No app is perfect, and specially not the one which was built in a tight time constraint :).
+Nice to have things that i would want to add if i were to make it production ready.
+* Internationalization - pretty straightforward with the structure of my app
+* Unit tests - code is broken down into testable components
+* Breaking some components further into components - towards the end my `ChatView` component became a little ugly, and could benefit from further breaking it down into further components. `Input` box on the `Login` as well as on the `ChatView` component could have been pulled out into a common component.
+* Adaptive design - the app does not work well with mobile phones. I have not used any media-query/breakpoints in the CSS, the use of %'s and relative sizing has made the app responsive on the desktop and would also work well on a tablet.
+* Persistence - I would also add persistence for the username, so that once logged in, you dont have to log in again on refresh.
+
+
 
 ## Context on design decisions and framework choices
-## Areas of improvements
+* I chose to use React for this app as a realtime app fits very well with Reactive programming paradigm.
+* To increase productivity I chose to spin up the basic app structure along with build and dev tolls using create react app. 
+* To increase productivity in creating actions/reducers, I used redux-toolkit createslice.
+* I chose to poll the server as that was the only feasible option without the ability to modify the server.
+* My redux state maintains 3 `slices` of data, `userInfo`, `roomInfo`, and `chatInfo`, which works well for current API design, but it could benefit from a normalized state for a complex system.
 
-
-
+## Flow of data
+* After Login, Selecting a room from sidebar changes the selectedRoomId in the global state, which triggers fetching of room details and starts the polling for the messages in the room. Selecting another room will clear this interval and start another polling for the new room. Posting a message makes the POST call, the polling then gets latest messages and updates the global state of messages, thus updating the chat room with latest messages.
 
 -------------------------------------------------------------------------------------------------
 
