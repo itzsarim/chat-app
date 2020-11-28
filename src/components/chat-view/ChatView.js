@@ -54,6 +54,14 @@ export function ChatView() {
 
     useEffect(() => {
         getRoomsDetails();
+    }, [])
+
+    useEffect(() => {
+        getRoomsDetails();
+    }, [messages])
+
+    useEffect(() => {
+        getRoomsDetails();
         pollForChat();
     }, [roomId]);
 
@@ -74,7 +82,7 @@ export function ChatView() {
                         if(i === arr.length-1) {
                             return <span className={styles.userName}>{`${user}`}</span>
                         }
-                        return <span className={styles.userName}>{`${user} ,`}</span>
+                        return <span className={styles.userName}>{`${user}, `}</span>
                     })
                 }
             </div>

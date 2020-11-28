@@ -15,7 +15,7 @@ export const sidebarSlice = createSlice({
     },
     setRoomDetails: (state, action) => {
       state.rooms = state.rooms && state.rooms.map((room) => {
-        if(room.id === action.payload.id) {
+        if(room && action.payload && room.id === action.payload.id) {
           room.users = action.payload.users;
         }
         return room;
