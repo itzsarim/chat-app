@@ -31,7 +31,7 @@ Nice to have things that i would want to add if i were to make it production rea
 * I chose to use React for this app as a realtime app fits very well with Reactive programming paradigm.
 * To increase productivity I chose to spin up the basic app structure along with build and dev tolls using create react app. 
 * To increase productivity in creating actions/reducers, I used redux-toolkit createslice.
-* I chose to poll the server as that was the only feasible option without the ability to modify the server.
+* I chose to poll the server as that was the only feasible option without the ability to modify the server. Currently the polling happens every 1500 milliseconds.
 * My redux state maintains 3 `slices` of data, `userInfo`, `roomInfo`, and `chatInfo`, which works well for current API design, but it could benefit from a normalized state for a complex system.
 
 ## Flow of data
