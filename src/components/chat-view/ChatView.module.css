@@ -1,0 +1,39 @@
+.header {
+    height: 15%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.main {
+    position: absolute;
+    top: 15%;
+    width: 100%;
+    background-color: #EFF1F2;
+    height: 75%;
+    box-shadow: inset 0px 0px 2px black;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.roomName {
+    color: #696969;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.participants {
+    font-size: 0.8em;
+}

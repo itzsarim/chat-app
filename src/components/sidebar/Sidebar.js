@@ -43,8 +43,8 @@ export function Sidebar() {
                 <div className={styles.online}>{`Online for ${duration} minutes`}</div>{/* write logic to convert minutes to hours beyond 60 minutes */}
             </div>
             <ul>
-               {rooms.map((room) => {
-                   return <li key={room.id} onClick={() => dispatch(setSelectedRoomId(room.id))}>{room.name}</li>
+               {rooms && rooms.map((room) => {
+                   return <li key={room.id} className={styles.list} onClick={() => dispatch(setSelectedRoomId(room.id))}><p className={styles.para}>{room.name}</p></li>
                })      
                }         
             </ul>

@@ -23,7 +23,7 @@ export function ChatView() {
         }
         setTimerId(setInterval(() => {
             getMessages();
-        }, 3000));
+        }, 5000));
     }
 
     function handleSend(e) {
@@ -55,15 +55,15 @@ export function ChatView() {
     return (
         <>
         <div className={styles.header}> 
-            <div className={styles.roomName}>{roomDetail[0] && roomDetail[0].name}</div>
+            <div className={styles.roomName}>{roomDetail && roomDetail[0] && roomDetail[0].name}</div>
             <div className={styles.participants}>{
-                roomDetail[0] && roomDetail[0].users && roomDetail[0].users.map((user) => {
-                    return <span>{user}</span>
+                roomDetail && roomDetail[0] && roomDetail[0].users && roomDetail[0].users.map((user) => {
+                    return <span>{`${user},`}</span>
                 })
             }</div>
         </div>
         <div className={styles.main}>
-            {messages.map((message) => {
+            {messages && messages.map((message) => {
                 return <Bubble name={message.name} message={message.message} id={message.id}/>
             })}
         </div>

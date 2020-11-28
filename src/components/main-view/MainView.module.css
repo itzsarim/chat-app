@@ -3,10 +3,11 @@
 }
 
 .sidebar {
-    width: 400px;
+    width: 300px;
 
 }
 
-.chat-view {
-
+.chatView {
+     width: 100%;
+     position: relative;
 }

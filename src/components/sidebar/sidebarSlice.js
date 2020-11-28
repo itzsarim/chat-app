@@ -14,7 +14,7 @@ export const sidebarSlice = createSlice({
       state.selectedRoomId = action.payload;
     },
     setRoomDetails: (state, action) => {
-      state.rooms = state.rooms.map((room) => {
+      state.rooms = state.rooms && state.rooms.map((room) => {
         if(room.id === action.payload.id) {
           room.users = action.payload.users;
         }
@@ -27,6 +27,6 @@ export const sidebarSlice = createSlice({
 export const { setRooms, setSelectedRoomId, setRoomDetails } = sidebarSlice.actions;
 export const selectRooms = state => state.roomInfo.rooms ;
 export const selectRoomId = state => state.roomInfo.selectedRoomId;
-export const selectRoomDetailForId = state => state.roomInfo.rooms.filter((room) => room.id === state.roomInfo.selectedRoomId);
+export const selectRoomDetailForId = state => state.roomInfo.rooms && state.roomInfo.rooms.filter((room) => room.id === state.roomInfo.selectedRoomId);
 
 export default sidebarSlice.reducer;

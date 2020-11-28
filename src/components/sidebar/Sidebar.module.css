@@ -1,4 +1,35 @@
 .container {
-    background-color: red;
+    background-color: #FF1940;
     height: 100vh;
+    color: white;
+    text-align: left;
+    position: relative;
+}
+
+.header {
+    padding: 10% 0 8% 10%;
+}
+
+.name {
+    font-weight: bolder;
+    font-size: 1.5em;
+}
+
+.para {
+    line-height: 10vh
+}
+
+.online {
+    font-size: 0.75em;
+}
+
+.list {
+    height: 10vh;
+    padding-left: 8%;
+    vertical-align: center;
+    font-size: 1em;
+}
+
+.list:hover {
+    background-color: #800D20;
 }
