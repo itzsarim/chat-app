@@ -53,10 +53,12 @@
 
 .formContainer {
     width: 100%;
+    display: flex;
+    padding-left: 30px;
 }
 
 .enterMessage {
-    width: 80%;
+    width: 90%;
     outline: 0px;
     appearance: none;
     transition: all 0.2s ease 0s;

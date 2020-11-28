@@ -19,7 +19,7 @@ export function ChatView() {
     const scrollRef = useRef(null);
 
     function scrollToBottom() {
-        scrollRef.current.scrollTop = 4000;
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
     
     function pollForChat() {
@@ -91,7 +91,7 @@ export function ChatView() {
                     className={styles.enterMessage}
                     aria-label="type message here"
                     value={chatMessage}
-                    placeholder={"Type a message"}
+                    placeholder={"Type a message..."}
                     onChange={e => setChatMessage(e.target.value)}
                 />
                 <button

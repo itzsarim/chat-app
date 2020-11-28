@@ -26,7 +26,7 @@ export function Login({t}) {
                 className={styles.username}
                 aria-label="enter your username"
                 value={userName}
-                placeholder={"Type your username"}
+                placeholder={"Type your username..."}
                 pattern="^[a-zA-Z0-9_-]{3,16}$"
                 title="Alphanumeric string that may include _ and – having a length of 3 to 16 characters."
                 onChange={e => setUsername(e.target.value)}

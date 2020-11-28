@@ -44,7 +44,7 @@ export function Sidebar() {
             </div>
             <ul>
                {rooms && rooms.map((room) => {
-                   return <li key={room.id} className={styles.list} onClick={() => dispatch(setSelectedRoomId(room.id))}><p className={styles.para}>{room.name}</p></li>
+                   return <li tabindex="0" key={room.id} className={styles.list} onClick={() => dispatch(setSelectedRoomId(room.id))}><p className={styles.para}>{room.name}</p></li>
                })      
                }         
             </ul>
