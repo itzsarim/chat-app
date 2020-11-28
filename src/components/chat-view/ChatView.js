@@ -23,6 +23,7 @@ export function ChatView() {
     }
     
     function pollForChat() {
+        // clear any previous timer before starting a new poll
         if(pollTimerId) {
             clearInterval(pollTimerId);
         }
@@ -38,7 +39,7 @@ export function ChatView() {
         }
         postChatMessage(roomId, payload);
         setChatMessage('');
-        scrollToBottom();
+        //scrollToBottom();
         e.preventDefault();
     }
 
@@ -52,14 +53,35 @@ export function ChatView() {
         dispatch(setRoomDetails(details));
     }
 
+    // custom hook to store previous message value for comparing later on
+    function usePrevious(value) {
+        const ref = useRef();
+        useEffect(() => {
+            ref.current = value;
+        });
+        return ref.current;
+    }
+
+    const prevMessage = usePrevious(messages);
+
     useEffect(() => {
         getRoomsDetails();
     }, [])
 
     useEffect(() => {
-        getRoomsDetails();
+        // check if the last message you polled is not same as the current message
+        let lastSize = prevMessage && prevMessage.length;
+        let currentSize = messages && messages.length;
+        let prevLastId = lastSize && prevMessage[lastSize-1].id;
+        let currentLastId = currentSize && messages[currentSize-1].id;
+        // of messages are not same then get new room details and scroll to bottom
+        if(prevLastId !== currentLastId) {
+            getRoomsDetails();
+            scrollToBottom();
+        }
     }, [messages])
 
+    // get new room details and start polling for chat as soon as roomid changes
     useEffect(() => {
         getRoomsDetails();
         pollForChat();

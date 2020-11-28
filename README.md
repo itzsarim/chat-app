@@ -7,6 +7,7 @@ This app is built using create react app(CRA) as the starting point. To run this
 
 This app covers all the specifications given in the `detailed-design-specs` file.
 * Its been taken care that the app is accessible(scores 97% on lighthouse audit). Try using keyboard to navigate through the app.
+* Use of right function naming conventions and breaking down in component makes sure that comments are not needed to explain the flow. `index.js` loads the `App`. You can start reading the component floe from `App.js`.
 * There is a `Login` page which takes in a username that should be between 3 and 16 characters and can contain nothing but alphanumeric characters, - and _.
 * Once you login by entering a valid username, you are taken to the `MainView`, which has a `Sidebar` with name of the person who logged in and how long it has been since they logged in. There is a list of all rooms available based on the server response(Note: you cannot add a new room, as the server does not support it). 
 * When you click on a list item(room) the `ChatView` gets populated with room details and messages in that room. 
