@@ -39,7 +39,6 @@ export function ChatView() {
         }
         postChatMessage(roomId, payload);
         setChatMessage('');
-        //scrollToBottom();
         e.preventDefault();
     }
 
@@ -77,6 +76,7 @@ export function ChatView() {
         // of messages are not same then get new room details and scroll to bottom
         if(prevLastId !== currentLastId) {
             getRoomsDetails();
+            pollForChat();
             scrollToBottom();
         }
     }, [messages])
@@ -84,7 +84,7 @@ export function ChatView() {
     // get new room details and start polling for chat as soon as roomid changes
     useEffect(() => {
         getRoomsDetails();
-        pollForChat();
+        getMessages();
     }, [roomId]);
 
 
