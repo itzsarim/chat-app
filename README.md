@@ -1,7 +1,7 @@
 # Documentation of the project
 
 ## Notes on starting the app
-This app is built using create react app(CRA) as the starting point. To run this app, please downaload and install yarn on your machine(https://classic.yarnpkg.com/en/docs/install), then use command `yarn add` followed by `yarn start` to run the app. You will also need to run the server using `yarn api-server`
+This app is built using create react app(CRA) as the starting point. To run this app, please downaload and install `yarn` on your machine(https://classic.yarnpkg.com/en/docs/install), you also need to make sure your node version is `>=10.0` to use yarn and then use command `yarn install` followed by `yarn start` to run the app. You will also need to run the server using `yarn api-server`
 
 ## Notes on what was built 
 
