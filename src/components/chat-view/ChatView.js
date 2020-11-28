@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectName } from '../login/loginSlice';
 import { selectRoomId } from '../sidebar/sidebarSlice';
@@ -16,6 +16,11 @@ export function ChatView() {
     const selfName = useSelector(selectName);
     const [pollTimerId, setTimerId] = useState('');
     const [chatMessage, setChatMessage] = useState('');
+    const scrollRef = useRef(null);
+
+    function scrollToBottom() {
+        scrollRef.current.scrollTop = 4000;
+    }
     
     function pollForChat() {
         if(pollTimerId) {
@@ -33,6 +38,7 @@ export function ChatView() {
         }
         postChatMessage(roomId, payload);
         setChatMessage('');
+        scrollToBottom();
         e.preventDefault();
     }
 
@@ -73,12 +79,12 @@ export function ChatView() {
                 }
             </div>
         </div>
-        <div className={styles.main}>
+        <div className={styles.main} ref={scrollRef}>
             {messages && messages.map((message) => {
                 return <Bubble name={message.name} message={message.message} self={selfName} id={message.id}/>
             })}
         </div>
-        <div className={styles.footer}>
+        <div className={styles.footer} >
             <form className={styles.formContainer} onSubmit={handleSend}>
                 <input
                     type='text'
