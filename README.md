@@ -1,3 +1,26 @@
+# Documentation of the project
+
+## Notes on starting the app
+This app is built using create react app(CRA) asthe starting point. To run this app, please downaload and install yarn on your machine(https://classic.yarnpkg.com/en/docs/install), then use command `yarn start` to run the app. You will also need to run the server using `yarn api-server`
+
+## Notes on what was built 
+
+This app covers all the specifications given in the `detailed-design-specs` file.
+* Its been taken care that the app is accessible(scores 97% on lighthouse audit). Try using keyboard to navigate throught the app.
+* There is a `Login` page which takes in a username that should be between 3 and 16 characters and can contain nothing but alphanumeric characters, - and _.
+* Once you login by entering a valid username, you are taken to the `MainView`, which has a `Sidebar` with name of the person who logged in and how long it has been since they logged in. There is a list of all rooms available based on the server response(Note: you cannot add a new room, as the server does not support it). 
+* When you click on a list item(room) the `ChatView` gets populated with room details and messages in that room. 
+* You can add new messages in the room , these messages get added to the bottom of the chat and is also scrolled to the bottom.
+* The app is responsive on desktop.
+
+## Context on design decisions and framework choices
+## Areas of improvements
+
+
+
+
+-------------------------------------------------------------------------------------------------
+
 # DoorDash Frontend Interview Project
 * TLDR: *Build a chat app with real APIs*
 * Time: *3hr - 6hrs*

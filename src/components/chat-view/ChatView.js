@@ -28,7 +28,7 @@ export function ChatView() {
         }
         setTimerId(setInterval(() => {
             getMessages();
-        }, 500));
+        }, 1500));
     }
 
     function handleSend(e) {
