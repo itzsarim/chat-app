@@ -6,7 +6,9 @@ import { selectMessages, setMessages } from '../chat-view/chatSlice';
 import { setRoomDetails, selectRoomDetailForId } from '../sidebar/sidebarSlice';
 import { getChatMessages, getRoomsDetails as getRoomsDetailsApi, postChatMessage } from '../../api/chat-api';
 import { Bubble } from '../bubble/Bubble';
+import { Emoji } from '../Emoji/Emoji';
 import styles from './ChatView.module.css';
+import Popover from '@material-ui/core/Popover';
 
 export function ChatView() {
     const dispatch = useDispatch();
@@ -16,7 +18,11 @@ export function ChatView() {
     const selfName = useSelector(selectName);
     const [pollTimerId, setTimerId] = useState('');
     const [chatMessage, setChatMessage] = useState('');
+    const [chatReaction, setChatReaction] = useState('');
+    const [anchorEl, setAnchorEl] = useState(null);
     const scrollRef = useRef(null);
+
+    const popOverOpen = Boolean(anchorEl);
 
     function scrollToBottom() {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -29,16 +35,28 @@ export function ChatView() {
         }
         setTimerId(setInterval(() => {
             getMessages();
-        }, 1500));
+        }, 5000));
     }
 
     function handleSend(e) {
         const payload = {
             'name': selfName,
-            'message': chatMessage
+            'message': chatMessage,
+            'reaction': chatReaction
         }
         postChatMessage(roomId, payload);
         setChatMessage('');
+        setChatReaction('');
+        e.preventDefault();
+    }
+
+    const handlepopclick = (e) => {
+        setAnchorEl(e.target);
+        e.preventDefault();
+    }
+
+    const handleEmojiPick = (e) => {
+        setChatReaction(e.target.innerText);
         e.preventDefault();
     }
 
@@ -111,7 +129,7 @@ export function ChatView() {
         </div>
         <div className={styles.main} ref={scrollRef}>
             {messages && messages.map((message) => {
-                return <Bubble name={message.name} message={message.message} self={selfName} id={message.id} key={message.id}/>
+                return <Bubble name={message.name} message={message.message} reaction={message.reaction} self={selfName} id={message.id} key={message.id}/>
             })}
         </div>
         <div className={styles.footer} >
@@ -120,10 +138,33 @@ export function ChatView() {
                     type='text'
                     className={styles.enterMessage}
                     aria-label="type message here"
-                    value={chatMessage}
+                    value={`${chatMessage}${chatReaction}`}
                     placeholder={"Type a message..."}
                     onChange={e => setChatMessage(e.target.value)}
                 />
+                <Popover 
+                    open={popOverOpen}
+                    anchorEl={anchorEl}
+                    onClose={e => setAnchorEl(null)}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                      }}
+                    transformOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                >
+                    <Emoji
+                        handler={handleEmojiPick}
+                    />   
+                </Popover>
+                <button
+                    className={styles.button}
+                    onClick = {handlepopclick}
+                >
+                    <span>🙂</span>
+                </button>
                 <button
                     type="submit"
                     className={styles.button}
