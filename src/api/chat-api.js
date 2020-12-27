@@ -32,7 +32,10 @@ export async function postChatMessage(id, payload) {
     try {
         const response = await fetch(`${BASE_URL}/rooms/${id}/messages`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
             body: JSON.stringify(payload)
         });
         return await response.json();

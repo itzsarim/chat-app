@@ -6,9 +6,10 @@ import { selectMessages, setMessages } from '../chat-view/chatSlice';
 import { setRoomDetails, selectRoomDetailForId } from '../sidebar/sidebarSlice';
 import { getChatMessages, getRoomsDetails as getRoomsDetailsApi, postChatMessage } from '../../api/chat-api';
 import { Bubble } from '../bubble/Bubble';
-import { Emoji } from '../Emoji/Emoji';
+import { Emoji } from '../emoji/Emoji';
 import styles from './ChatView.module.css';
 import Popover from '@material-ui/core/Popover';
+import { func } from 'prop-types';
 
 export function ChatView() {
     const dispatch = useDispatch();
@@ -19,10 +20,10 @@ export function ChatView() {
     const [pollTimerId, setTimerId] = useState('');
     const [chatMessage, setChatMessage] = useState('');
     const [chatReaction, setChatReaction] = useState('');
+    const [imagePreviewDataUrl, setImagePreviewDataUrl] = useState('');
     const [anchorEl, setAnchorEl] = useState(null);
     const scrollRef = useRef(null);
 
-    const popOverOpen = Boolean(anchorEl);
 
     function scrollToBottom() {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -42,7 +43,7 @@ export function ChatView() {
         const payload = {
             'name': selfName,
             'message': chatMessage,
-            'reaction': chatReaction
+            'reaction': String(imagePreviewDataUrl)
         }
         postChatMessage(roomId, payload);
         setChatMessage('');
@@ -50,13 +51,29 @@ export function ChatView() {
         e.preventDefault();
     }
 
-    const handlepopclick = (e) => {
+    function handlepopclick(e) {
         setAnchorEl(e.target);
         e.preventDefault();
     }
 
+    function handleUpload(e) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            console.log(reader.result);
+            setImagePreviewDataUrl(reader.result);
+        }
+    }
+
+    const popOverClose = (e) => {
+        setAnchorEl(null);
+        e.preventDefault(e);
+    }
+
     const handleEmojiPick = (e) => {
-        setChatReaction(e.target.innerText);
+        setChatReaction(chatReaction + e.target.innerText);
+        setChatMessage(chatMessage + e.target.innerText);
         e.preventDefault();
     }
 
@@ -138,14 +155,14 @@ export function ChatView() {
                     type='text'
                     className={styles.enterMessage}
                     aria-label="type message here"
-                    value={`${chatMessage}${chatReaction}`}
+                    value={`${chatMessage}`}
                     placeholder={"Type a message..."}
                     onChange={e => setChatMessage(e.target.value)}
                 />
                 <Popover 
-                    open={popOverOpen}
+                    open={Boolean(anchorEl)}
                     anchorEl={anchorEl}
-                    onClose={e => setAnchorEl(null)}
+                    onClose={popOverClose}
                     anchorOrigin={{
                         vertical: 'top',
                         horizontal: 'center',
@@ -160,12 +177,6 @@ export function ChatView() {
                     />   
                 </Popover>
                 <button
-                    className={styles.button}
-                    onClick = {handlepopclick}
-                >
-                    <span>🙂</span>
-                </button>
-                <button
                     type="submit"
                     className={styles.button}
                     aria-label="submit username"
@@ -173,6 +184,30 @@ export function ChatView() {
                     <span>Send</span>
                 </button>
             </form>
+            <button
+                    className={styles.button}
+                    onClick={handlepopclick}
+                >
+                    <span className={styles.openEmoji}>🙂</span>
+            </button>
+            <input
+                id='upload'
+                type='file'
+                className={styles.invisible}
+                onChange={handleUpload}
+            />
+            <label
+                htmlFor='upload'
+                className={styles.uploadLabel}
+            >
+                &#8684;
+            </label>
+            {imagePreviewDataUrl ? 
+                <img
+                className={styles.imagePreview}
+                src={imagePreviewDataUrl}
+                ></img> : null
+            }
         </div>
 
         </>

@@ -77,3 +77,34 @@
     padding: 15px;
     font-weight: bold;
 }
+
+.openEmoji {
+    opacity: 0.2;
+    position: absolute;
+    right: 13%;
+    bottom: 43%;
+}
+
+.uploadLabel {
+    position: absolute;
+    right: 15%;
+    bottom: 42%;
+    opacity: 0.2;
+    font-size: 1.3em;
+}
+img {
+    width: 10px;
+    height: 10px;
+}
+.imagePreview {
+    position: absolute;
+    right: 25%;
+    bottom: 42%;
+}
+
+.invisible {
+    position: absolute;
+    width: 0;
+    height: 0;
+
+}
