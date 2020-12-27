@@ -92,10 +92,6 @@
     opacity: 0.2;
     font-size: 1.3em;
 }
-img {
-    width: 10px;
-    height: 10px;
-}
 .imagePreview {
     position: absolute;
     right: 25%;

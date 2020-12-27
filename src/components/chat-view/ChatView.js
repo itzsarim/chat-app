@@ -48,6 +48,7 @@ export function ChatView() {
         postChatMessage(roomId, payload);
         setChatMessage('');
         setChatReaction('');
+        setImagePreviewDataUrl('');
         e.preventDefault();
     }
 
@@ -206,6 +207,7 @@ export function ChatView() {
                 <img
                 className={styles.imagePreview}
                 src={imagePreviewDataUrl}
+                width="15px"
                 ></img> : null
             }
         </div>
