@@ -21,6 +21,7 @@ export function ChatView() {
     const [chatMessage, setChatMessage] = useState('');
     const [chatReaction, setChatReaction] = useState('');
     const [imagePreviewDataUrl, setImagePreviewDataUrl] = useState('');
+    const [imageFile, setImageFile] = useState('');
     const [anchorEl, setAnchorEl] = useState(null);
     const scrollRef = useRef(null);
 
@@ -40,12 +41,16 @@ export function ChatView() {
     }
 
     function handleSend(e) {
-        const payload = {
-            'name': selfName,
-            'message': chatMessage,
-            'reaction': String(imagePreviewDataUrl)
-        }
-        postChatMessage(roomId, payload);
+        // const payload = {
+        //     'name': selfName,
+        //     'message': chatMessage,
+        //     'reaction': imageFile
+        // }
+        const formData = new FormData();
+        formData.append('name', selfName);
+        formData.append('message', chatMessage);
+        formData.append('myFile', imageFile);
+        postChatMessage(roomId, formData);
         setChatMessage('');
         setChatReaction('');
         setImagePreviewDataUrl('');
@@ -59,12 +64,17 @@ export function ChatView() {
 
     function handleUpload(e) {
         const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            console.log(reader.result);
-            setImagePreviewDataUrl(reader.result);
-        }
+        setImageFile(file);
+        // Using objecturl
+        setImagePreviewDataUrl(URL.createObjectURL(file));
+
+        // Using File reader
+
+        // const reader = new FileReader();
+        // reader.readAsDataURL(file);
+        // reader.onloadend = (e) => {
+        //     setImageFile(e.target.result);
+        // }
     }
 
     const popOverClose = (e) => {
@@ -147,7 +157,7 @@ export function ChatView() {
         </div>
         <div className={styles.main} ref={scrollRef}>
             {messages && messages.map((message) => {
-                return <Bubble name={message.name} message={message.message} reaction={message.reaction} self={selfName} id={message.id} key={message.id}/>
+                return <Bubble name={message.name} message={message.message} reaction={message.reaction} path={message.path} self={selfName} id={message.id} key={message.id}/>
             })}
         </div>
         <div className={styles.footer} >
@@ -211,7 +221,6 @@ export function ChatView() {
                 ></img> : null
             }
         </div>
-
         </>
     );
 }

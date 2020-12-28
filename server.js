@@ -3,14 +3,16 @@ var app        = express()
 var bodyParser = require('body-parser')
 var shortid = require('shortid')
 var cors = require('cors');
+var fileupload = require('express-fileupload')
 
 app.use(cors({
   'origin': '*'
 }))
-
+//app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json({'limit': '50mb'}));
 app.use(bodyParser.urlencoded({'limit': '50mb', 'extended': true, 'parameterLimit': 50000}));
+app.use(fileupload());
 
 
 var port = process.env.PORT || 8080
@@ -104,22 +106,66 @@ router.route('/rooms/:roomId/messages')
     }
   })
   .post(function(req, res) {
-    room = findRoom(req.params.roomId)
-    if (room.error) {
-      console.log('Response:',room)
-      res.json(room)
-    } else if (!req.body.name || !req.body.message) {
-      console.log('Response:',{error: 'request missing name or message'})
-      res.json({error: 'request missing name or message'})
-    } else {
-      logUser(room, req.body.name)
-      const reaction = req.body.reaction || null
-      const messageObj = { name: req.body.name, message: req.body.message, id: shortid.generate(), reaction }
-      room.messages.push(messageObj)
-      console.log('Response:',{message: 'OK!'})
-      res.json(messageObj)
-    }
+    room = findRoom(req.params.roomId);
+    const image = req.files.myFile;
+    const fileName = image.name;
+    const path = 'public/images/' + fileName
+    image.mv(path, (error) => {
+      // if (error) {
+      //   console.error(error)
+      //   res.writeHead(500, {
+      //     'Content-Type': 'application/json'
+      //   })
+      //   res.end(JSON.stringify({ status: 'error', message: error }))
+      //   return
+      // }
+  
+      // res.writeHead(200, {
+      //   'Content-Type': 'application/json'
+      // })
+      // res.end(JSON.stringify({ status: 'success', path: 'images/' + fileName }));
+      if (room.error) {
+        console.log('Response:',room)
+        res.json(room)
+      } else if (!req.body.name || !req.body.message) {
+        console.log('Response:',{error: 'request missing name or message'})
+        res.json({error: 'request missing name or message'})
+      } else {
+        console.log('xxxxxxxx', image);
+        console.log('yyyyyyyy', fileName);
+        logUser(room, req.body.name)
+        const reaction = req.body.reaction || null
+        const messageObj = { name: req.body.name, message: req.body.message, id: shortid.generate(), reaction, path: 'images/' + fileName }
+        room.messages.push(messageObj)
+        console.log('Response:',{message: 'OK!'})
+        res.json(messageObj)
+      }
+    })
   })
+
+  router.route('/rooms/:roomId/messages/saveImage')
+  .post((req, res) => {
+    const image = req.files.myFile;
+    const fileName = image.name
+    const path = 'images/' + fileName
+    console.log('xxxxxxxx', image);
+    console.log('yyyyyyyy', fileName);
+    image.mv(path, (error) => {
+      if (error) {
+        console.error(error)
+        res.writeHead(500, {
+          'Content-Type': 'application/json'
+        })
+        res.end(JSON.stringify({ status: 'error', message: error }))
+        return
+      }
+  
+      res.writeHead(200, {
+        'Content-Type': 'application/json'
+      })
+      res.end(JSON.stringify({ status: 'success', path: 'images/' + fileName }));
+    })
+  });
 
 app.use('/api', router)
 app.listen(port)
