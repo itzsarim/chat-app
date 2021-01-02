@@ -1,23 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {Login} from './components/login/Login';
 import {MainView} from './components/main-view/MainView';
 import { useSelector } from 'react-redux';
-import { selectName } from './components/login/loginSlice';
+import { selectName, setUsersName ,setLoginTimestamp } from './components/login/loginSlice';
+import { useDispatch } from 'react-redux';
 import './App.css';
 
 function App() {
-  const [userName, setUsername] = useState('');
   const name = useSelector(selectName);
-  
+  const dispatch = useDispatch();
   useEffect(() => {
-    setUsername(name)
-  }, [name])
-  
-
+    if(name) {
+      dispatch(setUsersName(name));
+      dispatch(setLoginTimestamp(Date.now()));
+    }
+  }, []);
   return (
     <div className="App">
       <main className="App-main">
-        { userName ? <MainView /> : <Login /> }
+        { name ? <MainView /> : <Login /> }
       </main>
     </div>
   );

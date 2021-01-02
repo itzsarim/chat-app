@@ -14,7 +14,9 @@ export function Login({t}) {
   function handleSubmit(e) {
     // Typically the server should also have validation on username as it should be unique in the system
     dispatch(setUsersName(userName));
+    localStorage.setItem('user-name', userName);
     dispatch(setLoginTimestamp(Date.now()));
+    localStorage.setItem('login-time', Date.now());
     e.preventDefault();
   }
 

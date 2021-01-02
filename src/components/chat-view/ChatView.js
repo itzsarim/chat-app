@@ -9,7 +9,6 @@ import { Bubble } from '../bubble/Bubble';
 import { Emoji } from '../emoji/Emoji';
 import styles from './ChatView.module.css';
 import Popover from '@material-ui/core/Popover';
-import { func } from 'prop-types';
 
 export function ChatView() {
     const dispatch = useDispatch();

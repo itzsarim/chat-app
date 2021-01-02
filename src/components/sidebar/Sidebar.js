@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRooms } from '../../api/chat-api';
-import { selectName, selectTimestamp } from '../login/loginSlice';
+import { selectName, selectTimestamp, setUsersName ,setLoginTimestamp } from '../login/loginSlice';
 import styles from './Sidebar.module.css';
 import { selectRoomId, selectRooms, setRooms, setSelectedRoomId } from './sidebarSlice';
 
@@ -31,6 +31,13 @@ export function Sidebar() {
         }
 
     }
+    function logout() {
+        localStorage.removeItem('user-name');
+        localStorage.removeItem('login-time');
+        dispatch(setUsersName(''));
+        dispatch(setLoginTimestamp(''));
+    }
+
     function getTimeSinceLogin() {
         let currentTimestamp = Date.now();
         let differenceInTimestamp = currentTimestamp - timestamp;
@@ -43,6 +50,7 @@ export function Sidebar() {
                     <div className={styles.name}>{name}</div>
                     <div className={styles.online}>{`Online for ${duration} minutes`}</div>{/* write logic to convert minutes to hours beyond 60 minutes */}
                 </div>
+                <div onClick={logout}>Logout</div>
                 <ul>
                     {rooms && rooms.map((room) => {
                         return (
